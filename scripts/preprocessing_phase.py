@@ -28,6 +28,10 @@ __FILEPATH_FRESH_DATA = os.path.join(
 
 
 def main():
+    """
+    This function checks if the input argument is valid and calls the preprocess function with the input
+    file path.
+    """
 
     # Check if filepath argument exists
     if len(sys.argv) != 2:
@@ -64,17 +68,48 @@ def main():
 
 
 def preprocess(filepath: str):
+    """
+    The function preprocesses data from a file and saves it as a CSV file in an output folder.
+
+    :param filepath: The filepath parameter is a string that represents the path to the input file that
+    needs to be preprocessed
+    :type filepath: str
+    """
+
+    # Create output folder if it does not exist
+    if not os.path.exists(__OUTPUT_FOLDER):
+        os.makedirs(__OUTPUT_FOLDER)
+
+    # Preprocess the data and write to output folder as .csv
     _get_dataframe(filepath).to_csv(
         os.path.join(__OUTPUT_FOLDER, "preprocessed_" + os.path.basename(filepath)), sep="\t", index=False
     )
 
 
-def _get_dataframe(filepath: str) -> pd.Dataframe:
+def _get_dataframe(filepath: str) -> pd.DataFrame:
+    """
+    The function reads a CSV file and returns a preprocessed column of the dataset.
+
+    :param filepath: The `filepath` parameter is a string that represents the path to the file
+    containing the dataset to be read
+    :type filepath: str
+    :return: a pandas DataFrame object after reading a CSV file from the specified filepath and applying
+    a preprocessing function called "__preprocess_review" to the "Review" column of the dataset.
+    """
     dataset = pd.read_csv(filepath, delimiter='\t', quoting=3)
     return dataset['Review'].apply(__preprocess_review)
 
 
 def __preprocess_review(review: str) -> str:
+    """
+    This function preprocesses a given review by removing non-alphabetic characters, converting it to
+    lowercase, splitting it into words, stemming each word, and removing stopwords before returning the
+    preprocessed review as a string.
+
+    :param review: A string representing a review that needs to be preprocessed
+    :type review: str
+    :return: Preprocessed version of the input `review` string. 
+    """
     review = re.sub('[^a-zA-Z]', ' ', review)
     review = review.lower()
     review = review.split()
@@ -83,5 +118,6 @@ def __preprocess_review(review: str) -> str:
     return ' '.join(review)
 
 
-if __file__ == "__main__":
+if __name__ == "__main__":
+    print("Preprocessing data...")
     main()
