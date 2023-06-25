@@ -35,7 +35,7 @@ pip install -r requirements.txt
 Get the data via `dvc`:
 
 ```sh
-pip install dvc[gdrive]
+cd data
 dvc pull
 ```
 
