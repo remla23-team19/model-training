@@ -32,6 +32,15 @@ pip install -r requirements.txt
 
 > Note: if you are using Windows, replace `source venv/bin/activate` with `venv\Scripts\activate`
 
+Get the data via `dvc`:
+
+```sh
+pip install dvc[gdrive]
+dvc pull
+```
+
+> Note: this will require you to authenticate with Google Drive, and you will need to have access to the shared folder. Therefore, the data is also available in the `data` folder. This is not normally the case (especially with large files), but we are doing this for the sake of the project to demonstrate the use of `dvc` and best practices.
+
 ### Credits
 
 This project is based on Skillcate AI "Sentiment Analysis Project — with traditional ML & NLP".

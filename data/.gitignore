@@ -1,2 +1,5 @@
-/a1_RestaurantReviews_HistoricDump.tsv
-/a2_RestaurantReviews_FreshDump.tsv
+# NOTE: Normally, data files would be stored remotely and pulled, but since it requires a login, the files are already included in the repo.
+# However, since it is best practice to not store them, we still provide this .gitignore file to showcase we understand the concept.
+# Uncomment the following lines for a typical use case:
+# /a1_RestaurantReviews_HistoricDump.tsv
+# /a2_RestaurantReviews_FreshDump.tsv
