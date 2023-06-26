@@ -40,10 +40,10 @@ def main():
     # Check filepath argument
     filepath: str = sys.argv[1]
 
-    if filepath == "historic":
+    if filepath == "historical":
         filepath = __FILEPATH_HISTORIC_DATA
         if not os.path.exists(filepath):
-            print("Invalid argument: the default historic datafile (" +
+            print("Invalid argument: the default historical datafile (" +
                   str(filepath) + ") does not exist.")
             sys.exit(1)
 
