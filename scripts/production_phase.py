@@ -10,7 +10,15 @@ import pandas as pd
 
 # Define folder locations
 __ROOT_FOLDER = os.path.dirname(os.path.dirname(__file__))
+__DATA_FOLDER = os.path.join(__ROOT_FOLDER, "data")
 __OUTPUT_FOLDER = os.path.join(__ROOT_FOLDER, "output")
+
+
+# Define default datafile locations
+__FILEPATH_HISTORICAL_DATA = os.path.join(
+    __DATA_FOLDER, "a1_RestaurantReviews_HistoricDump.tsv")
+__FILEPATH_FRESH_DATA = os.path.join(
+    __DATA_FOLDER, "a2_RestaurantReviews_FreshDump.tsv")
 
 
 def main():
@@ -21,18 +29,33 @@ def main():
             "Invalid argument(s)! Please use: python [current_file_path.py] [data_file_path.tsv]")
         sys.exit(1)
 
+    filepath: str = sys.argv[1]
+
+    if filepath == "historical":
+        filepath = __FILEPATH_HISTORICAL_DATA
+        if not os.path.exists(filepath):
+            print("Invalid argument: the default historical datafile (" +
+                  str(filepath) + ") does not exist.")
+            sys.exit(1)
+    elif filepath == "fresh":
+        filepath = __FILEPATH_FRESH_DATA
+        if not os.path.exists(filepath):
+            print("Invalid argument: the default fresh datafile (" +
+                  str(filepath) + ") does not exist.")
+            sys.exit(1)
+
     # Check if filepath argument is a(n existing) .tsv file
-    if not sys.argv[1].endswith(".tsv"):
+    if not filepath.endswith(".tsv"):
         print("Invalid argument:",
-              sys.argv[1], "is required to be a filepath to a .tsv file.")
+              filepath, "is required to be a filepath to a .tsv file.")
         sys.exit(1)
 
-    elif not os.path.isfile(sys.argv[1]):
-        print("Invalid argument:", sys.argv[1], "does not exist.")
+    if not os.path.isfile(filepath):
+        print("Invalid argument:", filepath, "does not exist.")
         sys.exit(1)
 
     # Load and predict sentiment data
-    data = pd.read_csv(sys.argv[1],
+    data = pd.read_csv(filepath,
                        delimiter='\t',
                        quoting=3,
                        dtype={'Review': object, 'Liked': int})[:]
@@ -77,6 +100,13 @@ def predict_sentiment(input: Union[str, pd.DataFrame], model: str = 'c2_Classifi
     }
 
     if verbose:
+
+        print("""
+##############################
+# SENTIMENT ANALYSIS RESULTS #
+##############################
+        """)
+
         for i in range(len(data)):
             print(data[i], ":", str(y_pred[i]) + " (" +
                   str(prediction_map[y_pred[i]]) + ")")
