@@ -10,7 +10,6 @@ jobs:
         env:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          apt remove libgit2-dev
           apt install cmake
           # OpenSSL. Used by libgit2. Might be better to build this from source as well?
           apt install libssl-dev
