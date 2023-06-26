@@ -92,12 +92,12 @@ def naive_bayes_model(
     the 'Liked' column should contain the labels (0 or 1).
     :type data: pd.DataFrame
     :param seed: The `seed` parameter is an integer value used to set the random seed for
-    reproducibility of the results. It is used in the `train_test_split()` function to split the 
+    reproducibility of the results. It is used in the `train_test_split()` function to split the
     dataset into training and test sets. By setting the random seed, the same split can be obtained
     every time the function is run.
     :type seed: int
     :param verbose: A boolean parameter that determines whether or not to print additional
-    information during the execution of the function. If set to True, the function will 
+    information during the execution of the function. If set to True, the function will
     print the confusion matrix and accuracy score. If set to False, the function will not print
     any additional information. Defaults to False.
     :type verbose: bool (optional)
@@ -157,7 +157,7 @@ def __evaluation(y_test, y_pred, verbose: bool = True) -> Tuple[ndarray, float]:
     :param y_test: The true labels of the test set
     :param y_pred: The predicted values of the target variable
     :param verbose: A boolean parameter that determines whether or not to print performance metrics.
-    If set to True, the function will print the performance metrics. If set to False, the function 
+    If set to True, the function will print the performance metrics. If set to False, the function
     will not print anything. Defaults to True.
     :type verbose: bool (optional)
     :return: A tuple containing the confusion matrix and accuracy score.
@@ -175,7 +175,6 @@ def __evaluation(y_test, y_pred, verbose: bool = True) -> Tuple[ndarray, float]:
             "fp": int(cm[0][1]),
             "fn": int(cm[1][0]),
             "tp": int(cm[1][1]),
-            "matrix": cm
         }
     }
 

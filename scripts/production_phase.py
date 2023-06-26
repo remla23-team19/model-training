@@ -12,6 +12,7 @@ import pandas as pd
 
 # Define folder locations
 __ROOT_FOLDER = os.path.dirname(os.path.dirname(__file__))
+__MODEL_FOLDER = os.path.join(__ROOT_FOLDER, "models")
 __DATA_FOLDER = os.path.join(__ROOT_FOLDER, "data")
 __OUTPUT_FOLDER = os.path.join(__ROOT_FOLDER, "output")
 
@@ -100,13 +101,13 @@ def predict_sentiment(input_data: Union[str, pd.DataFrame],
     """
 
     # Check if model exists
-    model_path = os.path.join(__OUTPUT_FOLDER, model)
+    model_path = os.path.join(__MODEL_FOLDER, model)
     if not os.path.isfile(model_path):
         print("Invalid argument:", model, "does not exist.")
         sys.exit(1)
 
     # Check if bag of words exists
-    bow_path = os.path.join(__OUTPUT_FOLDER, bow)
+    bow_path = os.path.join(__MODEL_FOLDER, bow)
     if not os.path.isfile(bow_path):
         print("Invalid argument:", bow, "does not exist.")
         sys.exit(1)

@@ -116,7 +116,7 @@ def __preprocess_review(review: str) -> str:
 
     :param review: A string representing a review that needs to be preprocessed
     :type review: str
-    :return: Preprocessed version of the input `review` string. 
+    :return: Preprocessed version of the input `review` string.
     """
     review = re.sub('[^a-zA-Z]', ' ', review)
     review = review.lower()
