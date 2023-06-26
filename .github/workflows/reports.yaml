@@ -1,0 +1,40 @@
+name: Reports
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    runs-on: ubuntu-22.04
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Setup Python 3.8
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.8
+
+      - name: Dependencies
+        run: |
+          python3 -m pip install --upgrade pip
+          pip install --upgrade pip setuptools wheel
+          pip install -r requirements-pip.txt
+
+      - name: PyLint
+        run: pylint ./scripts --output-format=text:pylint.txt
+
+      - name: Upload Results PyLint
+        uses: actions/upload-artifact@v3
+        with:
+          name: pylint-results
+          path: pylint.txt
+
+      - name: MLlint
+        run: mllint -o mllint.md
+
+      - name: Upload Results MLLint
+        uses: actions/upload-artifact@v3
+        with:
+          name: mllint-results
+          path: mllint.md
