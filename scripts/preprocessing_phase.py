@@ -34,7 +34,7 @@ def main():
         sys.exit(1)
 
     # Check if filepath argument is a .tsv file
-    elif not sys.argv[1].endswith(".tsv"):
+    if not sys.argv[1].endswith(".tsv"):
         print("Invalid argument:",
               sys.argv[1], "is required to be a filepath to a .tsv file.")
         sys.exit(1)
@@ -44,9 +44,8 @@ def main():
         print("Invalid argument:", sys.argv[1], "does not exist.")
         sys.exit(1)
 
-    else:
-        # Preprocess the data and write to output folder as .csv
-        preprocess(filepath=sys.argv[1])
+    # Preprocess the data and write to output folder as .csv
+    preprocess(filepath=sys.argv[1])
 
 
 def preprocess(filepath: str):
