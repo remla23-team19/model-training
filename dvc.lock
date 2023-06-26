@@ -30,7 +30,7 @@ stages:
     outs:
     - path: models/c1_BoW_Sentiment_Model.pkl
       hash: md5
-      md5: 7aaf82489be11a9fea041c084292cee0
+      md5: 9f0c9d9516c2823bdf589d100305209e
       size: 39825
     - path: models/c2_Classifier_Sentiment_Model
       hash: md5
@@ -57,7 +57,7 @@ stages:
       size: 6504
     - path: models/c1_BoW_Sentiment_Model.pkl
       hash: md5
-      md5: 7aaf82489be11a9fea041c084292cee0
+      md5: 9f0c9d9516c2823bdf589d100305209e
       size: 39825
     - path: models/c2_Classifier_Sentiment_Model
       hash: md5
