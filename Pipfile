@@ -19,6 +19,8 @@ dvc-gdrive = "*"
 dslinter = "*"
 mllint = "*"
 isort = "*"
+matplotlib = "*"
+seaborn = "*"
 
 [dev-packages]
 

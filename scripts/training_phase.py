@@ -14,6 +14,8 @@ from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.metrics import confusion_matrix, accuracy_score
 from sklearn.model_selection import train_test_split
 from sklearn.naive_bayes import GaussianNB
+import seaborn as sns
+import matplotlib.pyplot as plt
 
 # Define folder locations
 ROOT_FOLDER = os.path.dirname(os.path.dirname(__file__))
@@ -177,6 +179,17 @@ def __evaluation(y_test, y_pred, verbose: bool = True) -> Tuple[ndarray, float]:
             "tp": int(cm[1][1]),
         }
     }
+
+    # Create a heat map plot of the confusion matrix with accuracy mentioned as well
+    plt.figure(figsize=(8, 6))
+    cm_dict = performance_metrics["confusion_matrix"]
+    sns.heatmap([[cm_dict["tn"], cm_dict["fp"]], [cm_dict["fn"], cm_dict["tp"]]],
+                annot=True, fmt="d", cmap="Blues")
+    plt.title("Confusion Matrix Heat Map\nAccuracy: {:.4f}".format(acs))
+    plt.xlabel("Predicted Class")
+    plt.ylabel("True Class")
+    plt.savefig(os.path.join(OUTPUT_FOLDER, "confusion_matrix_heat_map.png"))
+    plt.clf()
 
     if verbose:
         print("Performance Metrics:\n", performance_metrics)
