@@ -92,6 +92,12 @@ These can be used in the production phase of the pipeline.
 
 Furthermore, the performance metrics (confusion matrix and accuracy) will be stored in `/output` with the filename `performance_metrics_naive_bayes_model.json` and printed by default.
 
+Note, using `dvc` you can check if any changes in the experiment yield different metrics as follows:
+* Make a change, e.g. put `test_size=0.30` instead of `test_size=0.20` in `scripts/training_phase.py`
+* Run `dvc exp run` to reproduce the experiment
+* Run `dvc metrics diff` to compare the metrics, for this example it should yield:
+
+
 #### Production
 Run the production phase using `/scripts/production_phase.py`:
 ```sh

@@ -25,25 +25,25 @@ stages:
       size: 31609
     - path: scripts/training_phase.py
       hash: md5
-      md5: e940bc86ca3fa7aec795493eed9e45f4
+      md5: 83c2136901cd30a8dfcd09cd86034575
       size: 8304
     outs:
     - path: models/c1_BoW_Sentiment_Model.pkl
       hash: md5
-      md5: 9f0c9d9516c2823bdf589d100305209e
+      md5: 6757883822a0ab4c66e4fda2a3b517dc
       size: 39825
     - path: models/c2_Classifier_Sentiment_Model
       hash: md5
-      md5: 24b1c47d8d4e0cfe490370fb7a3e470b
+      md5: 40af86d3810eda789e964b5302bc9ed8
       size: 46215
     - path: output/confusion_matrix_heat_map.png
       hash: md5
-      md5: 6c857aef9efa797ccdf92c0d2339e62c
-      size: 21203
+      md5: c2bfcadba3237b6519f5c4458497b6d4
+      size: 23978
     - path: output/performance_naive_bayes_model.json
       hash: md5
-      md5: 0ce73a1e5ef7c8abf34de05d94eeb6b5
-      size: 94
+      md5: c185ce202ff427fe71397fbfb8f3ee70
+      size: 95
   production:
     cmd: python scripts/production_phase.py fresh
     deps:
@@ -57,11 +57,11 @@ stages:
       size: 6504
     - path: models/c1_BoW_Sentiment_Model.pkl
       hash: md5
-      md5: 9f0c9d9516c2823bdf589d100305209e
+      md5: 6757883822a0ab4c66e4fda2a3b517dc
       size: 39825
     - path: models/c2_Classifier_Sentiment_Model
       hash: md5
-      md5: 24b1c47d8d4e0cfe490370fb7a3e470b
+      md5: 40af86d3810eda789e964b5302bc9ed8
       size: 46215
     - path: scripts/production_phase.py
       hash: md5
