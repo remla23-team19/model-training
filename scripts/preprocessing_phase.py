@@ -20,6 +20,10 @@ __ROOT_FOLDER = os.path.dirname(os.path.dirname(__file__))
 __DATA_FOLDER = os.path.join(__ROOT_FOLDER, "data")
 __OUTPUT_FOLDER = os.path.join(__ROOT_FOLDER, "output")
 
+# Define default datafile location
+__FILEPATH_HISTORIC_DATA = os.path.join(
+    __DATA_FOLDER, "a1_RestaurantReviews_HistoricDump.tsv")
+
 
 def main():
     """
@@ -33,19 +37,29 @@ def main():
             "Invalid argument(s)! Please use: python [current_file_path.py] [data_file_path.tsv]")
         sys.exit(1)
 
+    # Check filepath argument
+    filepath: str = sys.argv[1]
+
+    if filepath == "historic":
+        filepath = __FILEPATH_HISTORIC_DATA
+        if not os.path.exists(filepath):
+            print("Invalid argument: the default historic datafile (" +
+                  str(filepath) + ") does not exist.")
+            sys.exit(1)
+
     # Check if filepath argument is a .tsv file
-    if not sys.argv[1].endswith(".tsv"):
+    if not filepath.endswith(".tsv"):
         print("Invalid argument:",
-              sys.argv[1], "is required to be a filepath to a .tsv file.")
+              filepath, "is required to be a filepath to a .tsv file.")
         sys.exit(1)
 
     # Check if file exists
-    elif not os.path.isfile(sys.argv[1]):
-        print("Invalid argument:", sys.argv[1], "does not exist.")
+    if not os.path.isfile(filepath):
+        print("Invalid argument:", filepath, "does not exist.")
         sys.exit(1)
 
     # Preprocess the data and write to output folder as .csv
-    preprocess(filepath=sys.argv[1])
+    preprocess(filepath)
 
 
 def preprocess(filepath: str):
