@@ -96,6 +96,8 @@ Note, using `dvc` you can check if any changes in the experiment yield different
 * Make a change, e.g. put `test_size=0.30` instead of `test_size=0.20` in `scripts/training_phase.py`
 * Run `dvc exp run` to reproduce the experiment
 * Run `dvc metrics diff` to compare the metrics, for this example it should yield:
+* 
+![image](https://github.com/remla23-team19/model-training/assets/56686692/6f0ca7f6-fa97-4fc9-80f2-b5fb3024e7e2)
 
 
 #### Production
