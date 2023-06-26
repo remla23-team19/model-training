@@ -7,14 +7,14 @@ The training pipeline is in `b1_Sentiment_Analysis_Model.ipynb`.
 The inference pipeline is in `b2_Sentiment_Predictor.ipynb`.
 Training data is in `a1_RestaurantReviews_HistoricDump.tsv`.
 
-### Structure
+## Structure
 
 - `/data`: contains the training data
 - `/models`: contains trained models
 - `/scripts`: contains all pieces of the pipeline
 - `/backup`: contains old version of the repository, for reference only
 
-### Instructions
+## Instructions
 
 Clone the repository:
 
