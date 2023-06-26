@@ -11,6 +11,7 @@ jobs:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
         run: |
           pip install --upgrade pip
+          pip install pygit2
           pip install -r requirements-pip.txt
           dvc repro 
           git fetch --prune
