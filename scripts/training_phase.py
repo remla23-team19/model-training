@@ -185,7 +185,7 @@ def __evaluation(y_test, y_pred, verbose: bool = True) -> Tuple[ndarray, float]:
     cm_dict = performance_metrics["confusion_matrix"]
     sns.heatmap([[cm_dict["tn"], cm_dict["fp"]], [cm_dict["fn"], cm_dict["tp"]]],
                 annot=True, fmt="d", cmap="Blues")
-    plt.title("Confusion Matrix Heat Map\nAccuracy: {:.4f}".format(acs))
+    plt.title(f"Confusion Matrix Heat Map\nAccuracy: {acs:.4f}")
     plt.xlabel("Predicted Class")
     plt.ylabel("True Class")
     plt.savefig(os.path.join(OUTPUT_FOLDER, "confusion_matrix_heat_map.png"))
