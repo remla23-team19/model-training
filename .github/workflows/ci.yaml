@@ -1,4 +1,4 @@
-name: Reports
+name: Code Quality and Testing
 
 on: [push, pull_request]
 
