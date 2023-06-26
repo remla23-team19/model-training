@@ -20,12 +20,6 @@ __ROOT_FOLDER = os.path.dirname(os.path.dirname(__file__))
 __DATA_FOLDER = os.path.join(__ROOT_FOLDER, "data")
 __OUTPUT_FOLDER = os.path.join(__ROOT_FOLDER, "output")
 
-# Define file locations
-__FILEPATH_HISTORICAL_DATA = os.path.join(
-    __DATA_FOLDER, "a1_RestaurantReviews_HistoricDump.tsv")
-__FILEPATH_FRESH_DATA = os.path.join(
-    __DATA_FOLDER, "a2_RestaurantReviews_FreshDump.tsv")
-
 
 def main():
     """
@@ -38,18 +32,6 @@ def main():
         print(
             "Invalid argument(s)! Please use: python [current_file_path.py] [data_file_path.tsv]")
         sys.exit(1)
-
-    # Check if filepath argument is "historical" or "fresh" (for default data files)
-    if sys.argv[1] == "historical":
-        if not os.path.isfile(__FILEPATH_HISTORICAL_DATA):
-            print("Invalid argument: historical data file does not exist.")
-            sys.exit(1)
-        preprocess(filepath=__FILEPATH_HISTORICAL_DATA)
-    elif sys.argv[1] == "fresh":
-        if not os.path.isfile(__FILEPATH_FRESH_DATA):
-            print("Invalid argument: fresh data file does not exist.")
-            sys.exit(1)
-        preprocess(filepath=__FILEPATH_FRESH_DATA)
 
     # Check if filepath argument is a .tsv file
     elif not sys.argv[1].endswith(".tsv"):
@@ -96,8 +78,15 @@ def _get_dataframe(filepath: str) -> pd.DataFrame:
     :return: a pandas DataFrame object after reading a CSV file from the specified filepath and applying
     a preprocessing function called "__preprocess_review" to the "Review" column of the dataset.
     """
-    dataset = pd.read_csv(filepath, delimiter='\t', quoting=3)
-    return dataset['Review'].apply(__preprocess_review)
+    # Read from CSV
+    data: pd.DataFrame = pd.read_csv(filepath, delimiter='\t', quoting=3, dtype={
+        'Review': object, 'Liked': int})[:]
+
+    # Preprocess the "Review" column
+    data['Review'] = data['Review'].apply(__preprocess_review)
+
+    # Return the preprocessed DataFrame
+    return data
 
 
 def __preprocess_review(review: str) -> str:
