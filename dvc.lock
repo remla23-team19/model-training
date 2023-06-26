@@ -44,3 +44,26 @@ stages:
       hash: md5
       md5: 0ce73a1e5ef7c8abf34de05d94eeb6b5
       size: 94
+  production:
+    cmd: python scripts/production_phase.py fresh
+    deps:
+    - path: data/a1_RestaurantReviews_HistoricDump.tsv
+      hash: md5
+      md5: 102f1f4193e0bdebdd6cce7f13e0a839
+      size: 54686
+    - path: data/a2_RestaurantReviews_FreshDump.tsv
+      hash: md5
+      md5: 097c8b95f6b255e5a6a06b29d61fef8e
+      size: 6504
+    - path: models/c1_BoW_Sentiment_Model.pkl
+      hash: md5
+      md5: 7aaf82489be11a9fea041c084292cee0
+      size: 39825
+    - path: models/c2_Classifier_Sentiment_Model
+      hash: md5
+      md5: 24b1c47d8d4e0cfe490370fb7a3e470b
+      size: 46215
+    - path: scripts/production_phase.py
+      hash: md5
+      md5: aebb6d64ad9fa2200fa356e2e0a7971e
+      size: 5492

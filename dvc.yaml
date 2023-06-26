@@ -18,7 +18,7 @@ stages:
     metrics:
       - output/performance_naive_bayes_model.json
   production:
-    cmd: python scripts/production_phase.py
+    cmd: python scripts/production_phase.py fresh
     deps:
       - scripts/production_phase.py
       - models/c1_BoW_Sentiment_Model.pkl
