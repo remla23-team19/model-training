@@ -1,0 +1,27 @@
+stages:
+  preprocessing:
+    cmd: python scripts/preprocessing_phase.py historical
+    deps:
+      - scripts/preprocessing_phase.py
+      - data/a1_RestaurantReviews_HistoricDump.tsv
+    outs:
+      - output/preprocessed_a1_RestaurantReviews_HistoricDump.tsv
+  training:
+    cmd: python scripts/training_phase.py historical
+    deps:
+      - scripts/training_phase.py
+      - output/preprocessed_a1_RestaurantReviews_HistoricDump.tsv
+    outs:
+      - models/c1_BoW_Sentiment_Model.pkl
+      - models/c2_Classifier_Sentiment_Model
+      - output/confusion_matrix_heat_map.png
+    metrics:
+      - output/performance_naive_bayes_model.json
+  production:
+    cmd: python scripts/production_phase.py
+    deps:
+      - scripts/production_phase.py
+      - models/c1_BoW_Sentiment_Model.pkl
+      - models/c2_Classifier_Sentiment_Model
+      - data/a1_RestaurantReviews_HistoricDump.tsv
+      - data/a2_RestaurantReviews_FreshDump.tsv

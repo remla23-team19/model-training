@@ -1,0 +1,18 @@
+schema: '2.0'
+stages:
+  preprocessing:
+    cmd: python scripts/preprocessing_phase.py historical
+    deps:
+    - path: data/a1_RestaurantReviews_HistoricDump.tsv
+      hash: md5
+      md5: 102f1f4193e0bdebdd6cce7f13e0a839
+      size: 54686
+    - path: scripts/preprocessing_phase.py
+      hash: md5
+      md5: f9820515082a44c4b4751fe2b7d57cc2
+      size: 4119
+    outs:
+    - path: output/preprocessed_a1_RestaurantReviews_HistoricDump.tsv
+      hash: md5
+      md5: 5fb43a68c3ec5b122224b5fcf73aaada
+      size: 31609
