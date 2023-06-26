@@ -16,6 +16,6 @@ jobs:
           git fetch --prune
           dvc metrics diff --show-md main > report.md
           # Add figure to the report
-          echo "## Validating results by region"
+          echo "## Performance" >> report.md
           cml-publish output/confusion_matrix_heat_map.png --md >> report.md
           cml-send-comment report.md
