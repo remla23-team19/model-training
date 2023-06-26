@@ -13,6 +13,7 @@ from sklearn.naive_bayes import GaussianNB
 
 # Define folder locations
 __ROOT_FOLDER = os.path.dirname(os.path.dirname(__file__))
+__MODEL_FOLDER = os.path.join(__ROOT_FOLDER, "models")
 __OUTPUT_FOLDER = os.path.join(__ROOT_FOLDER, "output")
 
 # Define default training datafile locations
@@ -92,6 +93,9 @@ def naive_bayes_model(input: pd.DataFrame, seed: int, verbose: bool = False) -> 
     if not os.path.isdir(__OUTPUT_FOLDER):
         os.mkdir(__OUTPUT_FOLDER)
 
+    if not os.path.isdir(__MODEL_FOLDER):
+        os.mkdir(__MODEL_FOLDER)
+
     # `cv = CountVectorizer(max_features = 1420)` is creating an instance of the CountVectorizer class
     # with a maximum number of features set to 1420. CountVectorizer is a method for converting text
     # data into a matrix of token counts, where each row represents a document and each column
@@ -108,7 +112,7 @@ def naive_bayes_model(input: pd.DataFrame, seed: int, verbose: bool = False) -> 
     y = input.iloc[:, 1].values
 
     # Save the CountVectorizer object (Bag of Words (BoW) dictionary) as a pickle file
-    with open(os.path.join(__OUTPUT_FOLDER, _MODEL_STORAGE_NAME + ".pkl"), "wb") as f:
+    with open(os.path.join(__MODEL_FOLDER, _MODEL_STORAGE_NAME + ".pkl"), "wb") as f:
         pickle.dump(cv, f)
 
     # Split the dataset into training and test sets
@@ -121,7 +125,7 @@ def naive_bayes_model(input: pd.DataFrame, seed: int, verbose: bool = False) -> 
 
     # Exporting NB Classifier to later use in prediction
     joblib.dump(classifier, os.path.join(
-        __OUTPUT_FOLDER, 'c2_Classifier_Sentiment_Model'))
+        __MODEL_FOLDER, 'c2_Classifier_Sentiment_Model'))
 
     # Predict the test set results
     y_pred = classifier.predict(X_test)
