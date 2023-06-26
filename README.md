@@ -28,10 +28,21 @@ Install dependencies using a virtual environment:
 python3 -m venv venv
 source venv/bin/activate
 pip install --upgrade pip setuptools wheel
-pip install -r requirements.txt
+pip install -r requirements-pip.txt
 ```
 
 > Note: if you are using Windows, replace `source venv/bin/activate` with `venv\Scripts\activate`
+
+Alternatively, use `pyenv` and `pipenv`:
+
+```sh
+pyenv install 3.8
+pyenv global 3.8
+pipenv --python /Users/username/.pyenv/shims/python
+pipenv install
+```
+
+> Note: the requirements-pipenv.txt file can also be used to install the dependencies using pip.
 
 Get the data via `dvc`:
 
