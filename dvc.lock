@@ -16,3 +16,31 @@ stages:
       hash: md5
       md5: 5fb43a68c3ec5b122224b5fcf73aaada
       size: 31609
+  training:
+    cmd: python scripts/training_phase.py historical
+    deps:
+    - path: output/preprocessed_a1_RestaurantReviews_HistoricDump.tsv
+      hash: md5
+      md5: 5fb43a68c3ec5b122224b5fcf73aaada
+      size: 31609
+    - path: scripts/training_phase.py
+      hash: md5
+      md5: e940bc86ca3fa7aec795493eed9e45f4
+      size: 8304
+    outs:
+    - path: models/c1_BoW_Sentiment_Model.pkl
+      hash: md5
+      md5: 7aaf82489be11a9fea041c084292cee0
+      size: 39825
+    - path: models/c2_Classifier_Sentiment_Model
+      hash: md5
+      md5: 24b1c47d8d4e0cfe490370fb7a3e470b
+      size: 46215
+    - path: output/confusion_matrix_heat_map.png
+      hash: md5
+      md5: 6c857aef9efa797ccdf92c0d2339e62c
+      size: 21203
+    - path: output/performance_naive_bayes_model.json
+      hash: md5
+      md5: 0ce73a1e5ef7c8abf34de05d94eeb6b5
+      size: 94
