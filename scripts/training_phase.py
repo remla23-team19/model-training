@@ -43,7 +43,7 @@ def main():
     if filepath == "historical":
         filepath = __FILEPATH_PREPROCESSED_HISTORICAL_DATA
         if not os.path.exists(filepath):
-            print("Invalid argument: historical training datafile (" +
+            print("Invalid argument: preprocessed historical training datafile (" +
                   str(filepath) + ") does not exist.")
             sys.exit(1)
 
