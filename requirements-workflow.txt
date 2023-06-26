@@ -1,0 +1,16 @@
+numpy
+setuptools
+wheel
+pandas
+nltk
+sklearn
+scikit-learn
+joblib
+dvc
+pylint==2.12.2
+dslinter
+mllint
+bandit
+black
+matplotlib
+seaborn
