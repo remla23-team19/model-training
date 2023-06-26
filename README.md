@@ -98,6 +98,22 @@ python3 scripts/production_phase.py data/a2_RestaurantReviews_FreshDump.tsv
 
 Running this script will print and return the predicted sentiment of the reviews in the given data file. By default, the script will use the BoW and Classifier model from the training phase. If you want to use a different model, please update the models in `/models` and change the model names in the script.
 
+## Code Quality
+To improve the code quality as much as possible, the following tools have been utilised to adhere to best practices.
+
+### PyLint
+Run via `pylint ./scripts`. The following output should be observed:
+
+![image](https://github.com/remla23-team19/model-training/assets/56686692/da07a177-f39f-4a94-beef-dfffe6414bf1)
+
+> Note: PyLint is configured such that DSLinter is also automatically run!
+
+### MLLint
+Run via `mllint run`. The following output regarding (data) version control should be observed:
+
+![image](https://github.com/remla23-team19/model-training/assets/56686692/9f847ba0-99ff-4660-9b6b-f9cb883f2559)
+
+
 ## Credits
 
 This project is based on Skillcate AI "Sentiment Analysis Project — with traditional ML & NLP".
