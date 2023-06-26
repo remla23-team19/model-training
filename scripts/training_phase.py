@@ -13,14 +13,11 @@ from sklearn.naive_bayes import GaussianNB
 
 # Define folder locations
 __ROOT_FOLDER = os.path.dirname(os.path.dirname(__file__))
-__DATA_FOLDER = os.path.join(__ROOT_FOLDER, "data")
 __OUTPUT_FOLDER = os.path.join(__ROOT_FOLDER, "output")
 
-# Define file locations
-__FILEPATH_HISTORICAL_DATA = os.path.join(
-    __DATA_FOLDER, "a1_RestaurantReviews_HistoricDump.tsv")
-__FILEPATH_FRESH_DATA = os.path.join(
-    __DATA_FOLDER, "a2_RestaurantReviews_FreshDump.tsv")
+# Define default training datafile locations
+__FILEPATH_PREPROCESSED_HISTORICAL_DATA = os.path.join(
+    __OUTPUT_FOLDER, "preprocessed_a1_RestaurantReviews_HistoricDump.tsv")
 
 
 def main():
@@ -42,14 +39,22 @@ def main():
     # Check filepath argument and aliases
     filepath: str = sys.argv[1]
 
+    # Check if filepath is alias for a default training datafile
+    if filepath == "historical":
+        filepath = __FILEPATH_PREPROCESSED_HISTORICAL_DATA
+        if not os.path.exists(filepath):
+            print("Invalid argument: historical training datafile (" +
+                  str(filepath) + ") does not exist.")
+            sys.exit(1)
+
     # Check if filepath argument is a .tsv file
-    if not filepath.endswith(".tsv"):
+    elif not filepath.endswith(".tsv"):
         print("Invalid argument:",
               sys.argv[1], "is required to be a filepath to a .tsv file.")
         sys.exit(1)
 
     # Check if file exists
-    elif not os.path.isfile(filepath):
+    if not os.path.isfile(filepath):
         print("Invalid argument:", filepath, "does not exist.")
         sys.exit(1)
 
