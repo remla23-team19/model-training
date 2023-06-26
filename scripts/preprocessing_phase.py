@@ -1,3 +1,7 @@
+"""
+Preprocessing Phase of the Sentiment Analysis ML Pipeline
+"""
+
 import os
 import re
 import sys
@@ -27,8 +31,9 @@ __FILEPATH_HISTORIC_DATA = os.path.join(
 
 def main():
     """
-    This function checks if the input argument is valid and calls the preprocess function with the input
-    file path.
+    This function checks if the input argument is valid and calls the preprocess function with
+    the input file path. It also allows for the default historical datafile to be used, if the
+    input argument is "historical".
     """
 
     # Check if filepath argument exists
@@ -66,8 +71,8 @@ def preprocess(filepath: str):
     """
     The function preprocesses data from a file and saves it as a CSV file in an output folder.
 
-    :param filepath: The filepath parameter is a string that represents the path to the input file that
-    needs to be preprocessed
+    :param filepath: The filepath parameter is a string that represents the path to the input file
+    that needs to be preprocessed
     :type filepath: str
     """
 
@@ -77,7 +82,8 @@ def preprocess(filepath: str):
 
     # Preprocess the data and write to output folder as .csv
     _get_dataframe(filepath).to_csv(
-        os.path.join(__OUTPUT_FOLDER, "preprocessed_" + os.path.basename(filepath)), sep="\t", index=False
+        os.path.join(__OUTPUT_FOLDER, "preprocessed_" + os.path.basename(filepath)),
+        sep="\t", index=False
     )
 
 
@@ -88,8 +94,8 @@ def _get_dataframe(filepath: str) -> pd.DataFrame:
     :param filepath: The `filepath` parameter is a string that represents the path to the file
     containing the dataset to be read
     :type filepath: str
-    :return: a pandas DataFrame object after reading a CSV file from the specified filepath and applying
-    a preprocessing function called "__preprocess_review" to the "Review" column of the dataset.
+    :return: a pandas DataFrame object after reading a CSV file from the specified filepath and
+    applying a preprocessing function to the "Review" column of the dataset.
     """
     # Read from CSV
     data: pd.DataFrame = pd.read_csv(filepath, delimiter='\t', quoting=3, dtype={
@@ -104,9 +110,9 @@ def _get_dataframe(filepath: str) -> pd.DataFrame:
 
 def __preprocess_review(review: str) -> str:
     """
-    This function preprocesses a given review by removing non-alphabetic characters, converting it to
-    lowercase, splitting it into words, stemming each word, and removing stopwords before returning the
-    preprocessed review as a string.
+    This function preprocesses a given review by removing non-alphabetic characters, converting it
+    to lowercase, splitting it into words, stemming each word, and removing stopwords before
+    returning the preprocessed review as a string.
 
     :param review: A string representing a review that needs to be preprocessed
     :type review: str
