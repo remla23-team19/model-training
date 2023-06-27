@@ -44,21 +44,28 @@ pipenv install
 
 > Note: the requirements-pipenv.txt file can also be used to install the dependencies using pip.
 
-Get the data via `dvc`:
-
+## Pipeline
+Disclaimer, follow in chronological order to reduce problems with missing data/output. The pipeline is designed to be run from the root directory of the repository. You can run the pipeline using the following command:
 ```sh
-cd data
+dvc repro
+```
+As for the details, the model-training pipeline consists of the following phases:
+
+### Data Collection 🗄️
+The data is collected from Google Drive (remote storage) and can be loaded using:
+```sh
+python3 scripts/data_phase.py
+```
+
+Alternatively, it can also be loaded using `dvc`:
+```sh
 dvc pull
 ```
 
-> Note: this will require you to authenticate with Google Drive, and you will need to have access to the shared folder. Therefore, the data is also available in the `/data` folder already. This is not normally the case (especially with large files), but we are doing this for the sake of the project to demonstrate the use of `dvc` and best practices. If you want to use `dvc repro` to reproduce the pipeline, you will need to add the datafiles to the `.gitignore` file. Normally, they would not be tracked or present and would be downloaded via `dvc pull` or `dvc repro`.
+However, this requires you to authenticate with Google Drive and have access to the shared folder.
+Therefore, the first option is used primarily and the second option is only used to demonstrate the use of `dvc` and best practices.
 
-
-### Pipeline
-Disclaimer, follow in chronological order to reduce problems with missing data/output.
-The model-training pipeline consists of the following phases:
-
-#### Preprocessing
+### Preprocessing 🚜
 Preprocess the `/data` using `/scripts/preprocessing_phase.py`:
 ```sh
 python3 [current_file_path.py] [data_file_path.tsv]
@@ -72,7 +79,7 @@ python3 scripts/preprocessing_phase.py data/a1_RestaurantReviews_HistoricDump.ts
 
 Running this script will result in a preprocessed file stored in `/output` with the filename `preprocessed_[data_file_path.tsv]`.
 
-#### Training
+### Training 🥷
 Train the model using `/scripts/training_phase.py`:
 ```sh
 python3 [current_file_path.py] [data_file_path.tsv]
@@ -100,7 +107,7 @@ Note, using `dvc` you can check if any changes in the experiment yield different
 ![image](https://github.com/remla23-team19/model-training/assets/56686692/6f0ca7f6-fa97-4fc9-80f2-b5fb3024e7e2)
 
 
-#### Production
+### Production 🚀
 Run the production phase using `/scripts/production_phase.py`:
 ```sh
 python3 [current_file_path.py] [data_file_path.tsv]

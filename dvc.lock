@@ -9,8 +9,8 @@ stages:
       size: 54686
     - path: scripts/preprocessing_phase.py
       hash: md5
-      md5: f9820515082a44c4b4751fe2b7d57cc2
-      size: 4119
+      md5: 84ce8a06822586ba59cdc210d034a094
+      size: 4101
     outs:
     - path: output/preprocessed_a1_RestaurantReviews_HistoricDump.tsv
       hash: md5
@@ -25,12 +25,12 @@ stages:
       size: 31609
     - path: scripts/training_phase.py
       hash: md5
-      md5: 83c2136901cd30a8dfcd09cd86034575
-      size: 8304
+      md5: 76a4fc07561c99fcb4e0c69ded85e844
+      size: 9287
     outs:
     - path: models/c1_BoW_Sentiment_Model.pkl
       hash: md5
-      md5: 6757883822a0ab4c66e4fda2a3b517dc
+      md5: 16464a6f14f87c1b096ed4c7176ea488
       size: 39825
     - path: models/c2_Classifier_Sentiment_Model
       hash: md5
@@ -57,7 +57,7 @@ stages:
       size: 6504
     - path: models/c1_BoW_Sentiment_Model.pkl
       hash: md5
-      md5: 6757883822a0ab4c66e4fda2a3b517dc
+      md5: 16464a6f14f87c1b096ed4c7176ea488
       size: 39825
     - path: models/c2_Classifier_Sentiment_Model
       hash: md5
@@ -67,3 +67,19 @@ stages:
       hash: md5
       md5: aebb6d64ad9fa2200fa356e2e0a7971e
       size: 5492
+  data:
+    cmd: python scripts/data_phase.py
+    deps:
+    - path: scripts/data_phase.py
+      hash: md5
+      md5: 59c0ddc8ad7497e61c3416ad7d9a3249
+      size: 2398
+    outs:
+    - path: data/a1_RestaurantReviews_HistoricDump.tsv
+      hash: md5
+      md5: 102f1f4193e0bdebdd6cce7f13e0a839
+      size: 54686
+    - path: data/a2_RestaurantReviews_FreshDump.tsv
+      hash: md5
+      md5: 097c8b95f6b255e5a6a06b29d61fef8e
+      size: 6504
