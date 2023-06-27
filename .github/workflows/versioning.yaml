@@ -21,9 +21,9 @@ jobs:
           pip install --upgrade pip setuptools wheel
           pip install -r requirements-pip.txt
 
-      - name: Download Data
-        run: |
-          dvc pull -r myremote
+      #   - name: Download Data
+      #     run: |
+      #       dvc pull -r myremote
 
       - name: Build Models
         run: |
