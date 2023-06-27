@@ -6,8 +6,8 @@ import os
 import pickle
 import sys
 from typing import List, Union
-import joblib
 
+import joblib
 import pandas as pd
 
 # Define folder locations

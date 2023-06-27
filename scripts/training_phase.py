@@ -7,15 +7,16 @@ import os
 import pickle
 import sys
 from typing import Tuple
+
 import joblib
-from numpy import ndarray
+import matplotlib.pyplot as plt
 import pandas as pd
+import seaborn as sns
+from numpy import ndarray
 from sklearn.feature_extraction.text import CountVectorizer
-from sklearn.metrics import confusion_matrix, accuracy_score
+from sklearn.metrics import accuracy_score, confusion_matrix
 from sklearn.model_selection import train_test_split
 from sklearn.naive_bayes import GaussianNB
-import seaborn as sns
-import matplotlib.pyplot as plt
 
 # Define folder locations
 ROOT_FOLDER = os.path.dirname(os.path.dirname(__file__))

@@ -2,8 +2,8 @@
 Create the ML models by running part of the pipeline
 """
 from data_phase import load_data
-from preprocessing_phase import preprocess, FILEPATH_HISTORICAL_DATA
-from training_phase import train, FILEPATH_PREPROCESSED_HISTORICAL_DATA
+from preprocessing_phase import FILEPATH_HISTORICAL_DATA, preprocess
+from training_phase import FILEPATH_PREPROCESSED_HISTORICAL_DATA, train
 
 
 def create_models():
