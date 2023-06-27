@@ -20,13 +20,13 @@ all_stopwords = stopwords.words('english')
 all_stopwords.remove('not')
 
 # Define folder locations
-__ROOT_FOLDER = os.path.dirname(os.path.dirname(__file__))
-__DATA_FOLDER = os.path.join(__ROOT_FOLDER, "data")
-__OUTPUT_FOLDER = os.path.join(__ROOT_FOLDER, "output")
+ROOT_FOLDER = os.path.dirname(os.path.dirname(__file__))
+DATA_FOLDER = os.path.join(ROOT_FOLDER, "data")
+OUTPUT_FOLDER = os.path.join(ROOT_FOLDER, "output")
 
 # Define default datafile location
-__FILEPATH_HISTORIC_DATA = os.path.join(
-    __DATA_FOLDER, "a1_RestaurantReviews_HistoricDump.tsv")
+FILEPATH_HISTORICAL_DATA = os.path.join(
+    DATA_FOLDER, "a1_RestaurantReviews_HistoricDump.tsv")
 
 
 def main():
@@ -46,7 +46,7 @@ def main():
     filepath: str = sys.argv[1]
 
     if filepath == "historical":
-        filepath = __FILEPATH_HISTORIC_DATA
+        filepath = FILEPATH_HISTORICAL_DATA
         if not os.path.exists(filepath):
             print("Invalid argument: the default historical datafile (" +
                   str(filepath) + ") does not exist.")
@@ -77,12 +77,12 @@ def preprocess(filepath: str):
     """
 
     # Create output folder if it does not exist
-    if not os.path.exists(__OUTPUT_FOLDER):
-        os.makedirs(__OUTPUT_FOLDER)
+    if not os.path.exists(OUTPUT_FOLDER):
+        os.makedirs(OUTPUT_FOLDER)
 
     # Preprocess the data and write to output folder as .csv
     _get_dataframe(filepath).to_csv(
-        os.path.join(__OUTPUT_FOLDER, "preprocessed_" + os.path.basename(filepath)),
+        os.path.join(OUTPUT_FOLDER, "preprocessed_" + os.path.basename(filepath)),
         sep="\t", index=False
     )
 
