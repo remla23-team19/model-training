@@ -21,6 +21,7 @@ mllint = "*"
 isort = "*"
 matplotlib = "*"
 seaborn = "*"
+requests = "*"
 
 [dev-packages]
 
