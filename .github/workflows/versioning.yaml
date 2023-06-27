@@ -24,6 +24,7 @@ jobs:
         run: |
           poetry env use python3.8
           poetry install
+          poetry check
 
       - name: Build Models
         run: |
