@@ -1,9 +1,13 @@
 """
 PyTest for checking the robustness of the model.
 """
+import os
 import random
+import sys
 
 import pytest
+
+sys.path.append(os.path.join(os.path.dirname(os.path.dirname(__file__)), "scripts"))
 
 
 from scripts import data_phase, preprocessing_phase, training_phase
