@@ -10,6 +10,7 @@ This is a project to train a model that performs sentiment analysis on restauran
 - `/models`: contains trained models
 - `/scripts`: contains all pieces of the pipeline
 - `/backup`: contains old version of the repository, for reference only
+- `/tests`: contains tests
 
 ## Instructions
 
@@ -19,34 +20,40 @@ Clone the repository:
 git clone https://github.com/remla23-team19/model-training.git
 ```
 
-Install dependencies using a virtual environment:
+Download [Poetry](https://python-poetry.org):
 
 ```sh
-python3 -m venv venv
-source venv/bin/activate
-pip install --upgrade pip setuptools wheel
-pip install -r requirements-pip.txt
+curl -sSL https://install.python-poetry.org | python3 -
 ```
 
-> Note: if you are using Windows, replace `source venv/bin/activate` with `venv\Scripts\activate`
-
-Alternatively, use `pyenv` and `pipenv`:
+Set up the virtual environment (Python 3.8):
 
 ```sh
-pyenv install 3.8
-pyenv global 3.8
-pipenv --python /Users/username/.pyenv/shims/python
-pipenv install
+poetry env use python3.8
 ```
 
-> Note: the requirements-pipenv.txt file can also be used to install the dependencies using pip.
+Install the dependencies:
+
+```sh
+poetry install
+```
+
+> Note: for details, please refer to `pyproject.toml`.
+
 
 ## Pipeline
 Disclaimer, follow in chronological order to reduce problems with missing data/output. The pipeline is designed to be run from the root directory of the repository. You can run the pipeline using the following command:
 ```sh
-dvc repro
+poetry run dvc repro
 ```
+
+Alternatively, you can run the pipeline using the following command:
+```sh
+poetry run dvc exp run
+```
+
 As for the details, the model-training pipeline consists of the following phases:
+> Note: visualize the phases of the pipeline using `poetry run dvc dag`
 
 ### Data Collection 🗄️
 The data is collected from Google Drive (remote storage) and can be loaded using:
@@ -122,19 +129,25 @@ python3 scripts/production_phase.py data/a2_RestaurantReviews_FreshDump.tsv
 Running this script will print and return the predicted sentiment of the reviews in the given data file. By default, the script will use the BoW and Classifier model from the training phase. If you want to use a different model, please update the models in `/models` and change the model names in the script.
 
 ## Code Quality
-To improve the code quality as much as possible, the following tools have been utilised to adhere to best practices. Note, the following tools are also used in the CI/CD pipeline and reports are generated automatically.
+To improve the code quality as much as possible, the following tools have been utilised to adhere to best practices. Note, the checking tools are also used in the CI/CD pipeline and reports are generated automatically.
 
 ### PyLint
-Run via `pylint ./scripts`. The following output should be observed:
+Run via `poetry run pylint ./scripts`. The following output should be observed:
 
 ![image](https://github.com/remla23-team19/model-training/assets/56686692/da07a177-f39f-4a94-beef-dfffe6414bf1)
 
 > Note: PyLint is configured such that DSLinter is also automatically run!
 
 ### MLLint
-Run via `mllint run`. The following output regarding (data) version control should be observed:
+Run via `poetry run mllint`. The following output regarding (data) version control should be observed:
 
 ![image](https://github.com/remla23-team19/model-training/assets/56686692/9f847ba0-99ff-4660-9b6b-f9cb883f2559)
+
+### black
+Fixes the formatting of the code. Run via `poetry run black .` or check via `poetry run black --check .` (should yield no output).
+
+### isort
+Fixes the order of imports. Run via `poetry run isort .` or check via `poetry run isort . --check-only .` (should yield no output).
 
 
 ## Credits
