@@ -58,7 +58,7 @@ As for the details, the model-training pipeline consists of the following phases
 ### Data Collection 🗄️
 The data is collected from Google Drive (remote storage) and can be loaded using:
 ```sh
-python3 scripts/data_phase.py
+poetry run python3 scripts/data_phase.py
 ```
 
 Alternatively, it can also be loaded using `dvc`:
@@ -72,13 +72,13 @@ Therefore, the first option is used primarily and the second option is only used
 ### Preprocessing 🚜
 Preprocess the `/data` using `/scripts/preprocessing_phase.py`:
 ```sh
-python3 [current_file_path.py] [data_file_path.tsv]
+poetry run python3 [current_file_path.py] [data_file_path.tsv]
 ```
 
 To simplify, the alias 'historical' can also be used to achieve the same as:
 ```sh
-python3 scripts/preprocessing_phase.py historical
-python3 scripts/preprocessing_phase.py data/a1_RestaurantReviews_HistoricDump.tsv 
+poetry run python3 scripts/preprocessing_phase.py historical
+poetry run python3 scripts/preprocessing_phase.py data/a1_RestaurantReviews_HistoricDump.tsv 
 ```
 
 Running this script will result in a preprocessed file stored in `/output` with the filename `preprocessed_[data_file_path.tsv]`.
@@ -86,13 +86,13 @@ Running this script will result in a preprocessed file stored in `/output` with 
 ### Training 🥷
 Train the model using `/scripts/training_phase.py`:
 ```sh
-python3 [current_file_path.py] [data_file_path.tsv]
+poetry run python3 [current_file_path.py] [data_file_path.tsv]
 ```
 
 To simplify, the alias 'historical' can also be used to achieve the same as:
 ```sh
-python3 scripts/training_phase.py historical
-python3 scripts/training_phase.py output/preprocessed_a1_RestaurantReviews_HistoricDump.tsv
+poetry run python3 scripts/training_phase.py historical
+poetry run python3 scripts/training_phase.py output/preprocessed_a1_RestaurantReviews_HistoricDump.tsv
 ```
 
 Running this script will result in two stored models in `/models`:
@@ -105,8 +105,8 @@ Furthermore, the performance metrics (confusion matrix and accuracy) will be sto
 
 Note, using `dvc` you can check if any changes in the experiment yield different metrics as follows:
 * Make a change, e.g. put `test_size=0.30` instead of `test_size=0.20` in `scripts/training_phase.py`
-* Run `dvc exp run` to reproduce the experiment
-* Run `dvc metrics diff` to compare the metrics, for this example it should yield:
+* Run `poetry run dvc exp run` to reproduce the experiment
+* Run `poetry run dvc metrics diff` to compare the metrics, for this example it should yield:
 * 
 ![image](https://github.com/remla23-team19/model-training/assets/56686692/6f0ca7f6-fa97-4fc9-80f2-b5fb3024e7e2)
 
@@ -114,16 +114,16 @@ Note, using `dvc` you can check if any changes in the experiment yield different
 ### Production 🚀
 Run the production phase using `/scripts/production_phase.py`:
 ```sh
-python3 [current_file_path.py] [data_file_path.tsv]
+poetry run python3 [current_file_path.py] [data_file_path.tsv]
 ```
 
 To simplify, the alias 'historical' and/or 'fresh' can also be used to achieve the same as:
 ```sh
-python3 scripts/production_phase.py historical
-python3 scripts/production_phase.py data/a1_RestaurantReviews_HistoricDump.tsv
+poetry run python3 scripts/production_phase.py historical
+poetry run python3 scripts/production_phase.py data/a1_RestaurantReviews_HistoricDump.tsv
 
-python3 scripts/production_phase.py fresh
-python3 scripts/production_phase.py data/a2_RestaurantReviews_FreshDump.tsv
+poetry run python3 scripts/production_phase.py fresh
+poetry run python3 scripts/production_phase.py data/a2_RestaurantReviews_FreshDump.tsv
 ```
 
 Running this script will print and return the predicted sentiment of the reviews in the given data file. By default, the script will use the BoW and Classifier model from the training phase. If you want to use a different model, please update the models in `/models` and change the model names in the script.
