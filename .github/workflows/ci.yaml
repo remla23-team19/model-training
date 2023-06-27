@@ -46,6 +46,23 @@ jobs:
           name: mllint-results
           path: mllint.md
 
+      - name: PyTest
+        run: |
+          set -e  # Exit immediately if a command exits with a non-zero status
+          poetry run pytest --junitxml=output/junit_output.xml --cov=scripts --cov-report=xml:output/coverage_output.xml --cov-fail-under=0  # Note: --cov-fail-under=0 is a temporary workaround
+
+      - name: Upload JUnit Results PyTest
+        uses: actions/upload-artifact@v3
+        with:
+          name: pytest-junit-output
+          path: output/junit_output.xml
+
+      - name: Upload Coverage Results PyTest
+        uses: actions/upload-artifact@v3
+        with:
+          name: pytest-coverage-output
+          path: output/coverage_output.xml
+
       - name: black
         run: |
           set -e  # Exit immediately if a command exits with a non-zero status
