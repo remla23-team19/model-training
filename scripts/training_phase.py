@@ -7,15 +7,16 @@ import os
 import pickle
 import sys
 from typing import Tuple
+
 import joblib
-from numpy import ndarray
+import matplotlib.pyplot as plt
 import pandas as pd
+import seaborn as sns
+from numpy import ndarray
 from sklearn.feature_extraction.text import CountVectorizer
-from sklearn.metrics import confusion_matrix, accuracy_score
+from sklearn.metrics import accuracy_score, confusion_matrix
 from sklearn.model_selection import train_test_split
 from sklearn.naive_bayes import GaussianNB
-import seaborn as sns
-import matplotlib.pyplot as plt
 
 # Define folder locations
 ROOT_FOLDER = os.path.dirname(os.path.dirname(__file__))
@@ -24,7 +25,8 @@ OUTPUT_FOLDER = os.path.join(ROOT_FOLDER, "output")
 
 # Define default training datafile locations
 FILEPATH_PREPROCESSED_HISTORICAL_DATA = os.path.join(
-    OUTPUT_FOLDER, "preprocessed_a1_RestaurantReviews_HistoricDump.tsv")
+    OUTPUT_FOLDER, "preprocessed_a1_RestaurantReviews_HistoricDump.tsv"
+)
 
 MODEL_STORAGE_NAME: str = "c1_BoW_Sentiment_Model"
 
@@ -40,7 +42,8 @@ def main():
     if len(sys.argv) < 2 or len(sys.argv) > 3:
         print(
             "Invalid argument(s)! Please use: python [current_file_path.py] \
-              [data_file_path.tsv] [optional: seed int]")
+              [data_file_path.tsv] [optional: seed int]"
+        )
         sys.exit(1)
 
     # Check seed argument or set to default
@@ -59,14 +62,20 @@ def main():
     if filepath == "historical":
         filepath = FILEPATH_PREPROCESSED_HISTORICAL_DATA
         if not os.path.exists(filepath):
-            print("Invalid argument: preprocessed historical training datafile (" +
-                  str(filepath) + ") does not exist.")
+            print(
+                "Invalid argument: preprocessed historical training datafile ("
+                + str(filepath)
+                + ") does not exist."
+            )
             sys.exit(1)
 
     # Check if filepath argument is a .tsv file
     elif not filepath.endswith(".tsv"):
-        print("Invalid argument:",
-              sys.argv[1], "is required to be a filepath to a .tsv file.")
+        print(
+            "Invalid argument:",
+            sys.argv[1],
+            "is required to be a filepath to a .tsv file.",
+        )
         sys.exit(1)
 
     # Check if file exists
@@ -93,14 +102,18 @@ def train(filepath: str, seed: int = 0):
     should be the same. If no seed is provided, the seed defaults to 0.
     :type seed: int (optional)
     """
-    naive_bayes_model(pd.read_csv(filepath, delimiter='\t', dtype={
-                      'Review': object, 'Liked': int})[:], seed, verbose=True)
+    naive_bayes_model(
+        pd.read_csv(filepath, delimiter="\t", dtype={"Review": object, "Liked": int})[
+            :
+        ],
+        seed,
+        verbose=True,
+    )
 
 
 def naive_bayes_model(
-        data: pd.DataFrame,
-        seed: int,
-        verbose: bool = False) -> Tuple[ndarray, float]:
+    data: pd.DataFrame, seed: int, verbose: bool = False
+) -> Tuple[ndarray, float]:
     """
     The function `naive_bayes_model` takes in a pandas DataFrame of text data,
     creates a Bag of Words (BoW) dictionary using CountVectorizer, trains a Gaussian Naive Bayes
@@ -143,7 +156,7 @@ def naive_bayes_model(
     # DataFrame using the CountVectorizer method. The `fit_transform()` method fits the
     # CountVectorizer to the text data and transforms it into a matrix of token counts. The
     # `toarray()` method converts the sparse matrix into a dense matrix.
-    X = cv.fit_transform(data['Review'].astype('U')).toarray()
+    X = cv.fit_transform(data["Review"].astype("U")).toarray()
     y = data.iloc[:, 1].values
 
     # Save the CountVectorizer object (Bag of Words (BoW) dictionary) as a pickle file
@@ -152,15 +165,15 @@ def naive_bayes_model(
 
     # Split the dataset into training and test sets
     X_train, X_test, y_train, y_test = train_test_split(
-        X, y, test_size=0.30, random_state=seed)
+        X, y, test_size=0.30, random_state=seed
+    )
 
     # Create a Gaussian Naive Bayes classifier and train it on the training set
     classifier = GaussianNB()
     classifier.fit(X_train, y_train)
 
     # Exporting NB Classifier to later use in prediction
-    joblib.dump(classifier, os.path.join(
-        MODEL_FOLDER, 'c2_Classifier_Sentiment_Model'))
+    joblib.dump(classifier, os.path.join(MODEL_FOLDER, "c2_Classifier_Sentiment_Model"))
 
     # Predict the test set results
     y_pred = classifier.predict(X_test)
@@ -195,14 +208,18 @@ def __evaluation(y_test, y_pred, verbose: bool = True) -> Tuple[ndarray, float]:
             "fp": int(cm[0][1]),
             "fn": int(cm[1][0]),
             "tp": int(cm[1][1]),
-        }
+        },
     }
 
     # Create a heat map plot of the confusion matrix with accuracy mentioned as well
     plt.figure(figsize=(8, 6))
     cm_dict = performance_metrics["confusion_matrix"]
-    sns.heatmap([[cm_dict["tn"], cm_dict["fp"]], [cm_dict["fn"], cm_dict["tp"]]],
-                annot=True, fmt="d", cmap="Blues")
+    sns.heatmap(
+        [[cm_dict["tn"], cm_dict["fp"]], [cm_dict["fn"], cm_dict["tp"]]],
+        annot=True,
+        fmt="d",
+        cmap="Blues",
+    )
     plt.title(f"Confusion Matrix Heat Map\nAccuracy: {acs:.4f}")
     plt.xlabel("Predicted Class")
     plt.ylabel("True Class")
@@ -212,8 +229,11 @@ def __evaluation(y_test, y_pred, verbose: bool = True) -> Tuple[ndarray, float]:
     if verbose:
         print("Performance Metrics:\n", performance_metrics)
 
-    with open(os.path.join(OUTPUT_FOLDER, 'performance_naive_bayes_model.json'),
-              'w', encoding='utf-8') as f:
+    with open(
+        os.path.join(OUTPUT_FOLDER, "performance_naive_bayes_model.json"),
+        "w",
+        encoding="utf-8",
+    ) as f:
         f.write(json.dumps(performance_metrics))
 
     return (cm, acs)

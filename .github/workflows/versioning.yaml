@@ -15,19 +15,20 @@ jobs:
         with:
           python-version: 3.8
 
+      - name: Install Poetry
+        uses: snok/install-poetry@v1.3.3
+        with:
+          version: 1.5.1
+
       - name: Dependencies
         run: |
-          python3 -m pip install --upgrade pip
-          pip install --upgrade pip setuptools wheel
-          pip install -r requirements-pip.txt
-
-      #   - name: Download Data
-      #     run: |
-      #       dvc pull -r myremote
+          poetry env use python3.8
+          poetry install
+          poetry check
 
       - name: Build Models
         run: |
-          python3 scripts/create_models.py
+          poetry run python3 scripts/create_models.py
 
       - name: Release Models
         id: create_release

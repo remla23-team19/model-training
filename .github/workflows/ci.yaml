@@ -15,14 +15,21 @@ jobs:
         with:
           python-version: 3.8
 
+      - name: Install Poetry
+        uses: snok/install-poetry@v1.3.3
+        with:
+          version: 1.5.1
+
       - name: Dependencies
         run: |
-          python3 -m pip install --upgrade pip
-          pip install --upgrade pip setuptools wheel
-          pip install -r requirements-pip.txt
+          poetry env use python3.8
+          poetry install
+          poetry check
 
       - name: PyLint
-        run: pylint ./scripts --output-format=text:pylint.txt
+        run: |
+          set -e  # Exit immediately if a command exits with a non-zero status
+          poetry run pylint ./scripts --output-format=text:pylint.txt --fail-under=10.0
 
       - name: Upload Results PyLint
         uses: actions/upload-artifact@v3
@@ -31,10 +38,20 @@ jobs:
           path: pylint.txt
 
       - name: MLlint
-        run: mllint -o mllint.md
+        run: poetry run mllint -o mllint.md
 
       - name: Upload Results MLLint
         uses: actions/upload-artifact@v3
         with:
           name: mllint-results
           path: mllint.md
+
+      - name: black
+        run: |
+          set -e  # Exit immediately if a command exits with a non-zero status
+          poetry run black --check .
+
+      - name: isort
+        run: |
+          set -e  # Exit immediately if a command exits with a non-zero status
+          poetry run isort --check-only .
