@@ -1,4 +1,11 @@
 stages:
+  data:
+    cmd: python scripts/data_phase.py
+    deps:
+      - scripts/data_phase.py
+    outs:
+      - data/a1_RestaurantReviews_HistoricDump.tsv
+      - data/a2_RestaurantReviews_FreshDump.tsv
   preprocessing:
     cmd: python scripts/preprocessing_phase.py historical
     deps:
