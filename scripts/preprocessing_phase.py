@@ -73,13 +73,15 @@ def main():
     preprocess(filepath)
 
 
-def preprocess(filepath: str):
+def preprocess(filepath: str) -> pd.DataFrame:
     """
-    The function preprocesses data from a file and saves it as a CSV file in an output folder.
+    This function preprocesses data from a file and
+    saves the result as a CSV file in an output folder.
 
-    :param filepath: The filepath parameter is a string that represents the path to the input file
+    :param filepath: The `filepath` parameter is a string that represents the path to the input file
     that needs to be preprocessed
     :type filepath: str
+    :return: a pandas DataFrame object.
     """
 
     # Create output folder if it does not exist
@@ -87,11 +89,13 @@ def preprocess(filepath: str):
         os.makedirs(OUTPUT_FOLDER)
 
     # Preprocess the data and write to output folder as .csv
-    _get_dataframe(filepath).to_csv(
+    result = _get_dataframe(filepath)
+    result.to_csv(
         os.path.join(OUTPUT_FOLDER, "preprocessed_" + os.path.basename(filepath)),
         sep="\t",
         index=False,
     )
+    return result
 
 
 def _get_dataframe(filepath: str) -> pd.DataFrame:

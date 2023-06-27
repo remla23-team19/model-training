@@ -1,9 +1,9 @@
 """
 Create the ML models by running part of the pipeline
 """
-from data_phase import load_data
-from preprocessing_phase import FILEPATH_HISTORICAL_DATA, preprocess
-from training_phase import FILEPATH_PREPROCESSED_HISTORICAL_DATA, train
+from scripts.data_phase import load_data
+from scripts.preprocessing_phase import FILEPATH_HISTORICAL_DATA, preprocess
+from scripts.training_phase import FILEPATH_PREPROCESSED_HISTORICAL_DATA, train
 
 
 def create_models():
