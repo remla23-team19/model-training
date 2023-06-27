@@ -75,6 +75,24 @@ def main():
         sys.exit(1)
 
     # Train the model
+    train(filepath, seed)
+
+
+def train(filepath: str, seed: int = 0):
+    """
+    The function trains a Naive Bayes model on a dataset read from a file and prints verbose output.
+
+    :param filepath: The filepath parameter is a string that represents the path to the file
+    containing the data that will be used to train the Naive Bayes model. The data should be in a
+    tab-separated format with two columns: "Review" and "Liked". The "Review" column should contain
+    the text of the review and the "Liked" column should contain the label (0 or 1) of the review.
+    :type filepath: str
+    :param seed: The `seed` parameter is an optional integer value that is used to initialize the
+    random number generator. It is used to ensure that the results of the model training are
+    reproducible. If the same seed value is used across multiple runs of the model, the results
+    should be the same. If no seed is provided, the seed defaults to 0.
+    :type seed: int (optional)
+    """
     naive_bayes_model(pd.read_csv(filepath, delimiter='\t', dtype={
                       'Review': object, 'Liked': int})[:], seed, verbose=True)
 
