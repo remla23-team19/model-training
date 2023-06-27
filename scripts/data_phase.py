@@ -10,7 +10,7 @@ ROOT_FOLDER = os.path.dirname(os.path.dirname(__file__))
 DATA_FOLDER = os.path.join(ROOT_FOLDER, "data")
 
 HISTORICAL_DATA_FILENAME = "a1_RestaurantReviews_HistoricDump.tsv"
-FRESH_DATA_FILENAME = "a2_RestaurantReviews_Fresh.tsv"
+FRESH_DATA_FILENAME = "a2_RestaurantReviews_FreshDump.tsv"
 
 GDRIVE_ID_HISTORICAL_DATA = "1vY_6GRk1dCko5861mXHrMzDEMI8h4MW6"
 GDRIVE_ID_FRESH_DATA = "1ces0S1KSqNHuIh5yZ8B4-ksq3iNLAeL5"
