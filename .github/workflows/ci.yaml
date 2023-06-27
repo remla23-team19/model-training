@@ -15,14 +15,18 @@ jobs:
         with:
           python-version: 3.8
 
+      - name: Install Poetry
+        uses: snok/install-poetry@v1.3.3
+        with:
+          version: 1.5.1
+
       - name: Dependencies
         run: |
-          python3 -m pip install --upgrade pip
-          pip install --upgrade pip setuptools wheel
-          pip install -r requirements-pip.txt
+          poetry env use python3.8
+          poetry install
 
       - name: PyLint
-        run: pylint ./scripts --output-format=text:pylint.txt
+        run: poetry run pylint ./scripts --output-format=text:pylint.txt
 
       - name: Upload Results PyLint
         uses: actions/upload-artifact@v3
@@ -31,7 +35,7 @@ jobs:
           path: pylint.txt
 
       - name: MLlint
-        run: mllint -o mllint.md
+        run: poetry run mllint -o mllint.md
 
       - name: Upload Results MLLint
         uses: actions/upload-artifact@v3
