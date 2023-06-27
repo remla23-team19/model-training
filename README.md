@@ -51,7 +51,7 @@ cd data
 dvc pull
 ```
 
-> Note: this will require you to authenticate with Google Drive, and you will need to have access to the shared folder. Therefore, the data is also available in the `data` folder. This is not normally the case (especially with large files), but we are doing this for the sake of the project to demonstrate the use of `dvc` and best practices.
+> Note: this will require you to authenticate with Google Drive, and you will need to have access to the shared folder. Therefore, the data is also available in the `/data` folder already. This is not normally the case (especially with large files), but we are doing this for the sake of the project to demonstrate the use of `dvc` and best practices. If you want to use `dvc repro` to reproduce the pipeline, you will need to add the datafiles to the `.gitignore` file. Normally, they would not be tracked or present and would be downloaded via `dvc pull` or `dvc repro`.
 
 
 ### Pipeline
@@ -88,7 +88,7 @@ Running this script will result in two stored models in `/models`:
 * Bag of Words (BoW) model: `c1_BoW_Sentiment_Model.pkl`
 * Classifier model: `c2_Classifier_Sentiment_Model`
 
-These can be used in the production phase of the pipeline.
+These can be used in the production phase of the pipeline. In fact, every time you add a version tag (e.g. v1.0.0) to the repository, the models will be automatically stored in the release. With this versioning system, you can easily track which models were used for which release and reproduce the results.
 
 Furthermore, the performance metrics (confusion matrix and accuracy) will be stored in `/output` with the filename `performance_metrics_naive_bayes_model.json` and printed by default.
 
@@ -118,7 +118,7 @@ python3 scripts/production_phase.py data/a2_RestaurantReviews_FreshDump.tsv
 Running this script will print and return the predicted sentiment of the reviews in the given data file. By default, the script will use the BoW and Classifier model from the training phase. If you want to use a different model, please update the models in `/models` and change the model names in the script.
 
 ## Code Quality
-To improve the code quality as much as possible, the following tools have been utilised to adhere to best practices.
+To improve the code quality as much as possible, the following tools have been utilised to adhere to best practices. Note, the following tools are also used in the CI/CD pipeline and reports are generated automatically.
 
 ### PyLint
 Run via `pylint ./scripts`. The following output should be observed:
