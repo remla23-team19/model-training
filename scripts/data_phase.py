@@ -47,15 +47,15 @@ def load_data():
 
 def __get_drive_url(gdrive_id: str) -> str:
     """
-    This Python function takes a Google Drive file ID and returns a URL that can be used to download the
-    file.
+    Takes a Google Drive file ID and returns a URL that can be used to download the file.
 
-    :param gdrive_id: The `gdrive_id` parameter is a string that represents the unique identifier of a
-    file or folder in Google Drive. It is used to construct a URL that can be used to download the file
-    or access the folder
+    :param gdrive_id: The `gdrive_id` parameter is a string that represents the unique identifier
+    of a file or folder in Google Drive. It is used to construct a URL that can be used to
+    download the file or access the folder
     :type gdrive_id: str
-    :return: a string which is the URL of a Google Drive file with the given ID. The URL is constructed
-    by appending the ID to the base URL "https://drive.google.com/uc?export=download&id=".
+    :return: a string which is the URL of a Google Drive file with the given ID.
+    The URL is constructed by appending the ID to the base URL, namely:
+    "https://drive.google.com/uc?export=download&id=".
     """
     base_url = r"https://drive.google.com/uc?export=download&id="
     return base_url + gdrive_id
