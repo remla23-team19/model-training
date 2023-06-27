@@ -24,9 +24,12 @@ jobs:
         run: |
           poetry env use python3.8
           poetry install
+          poetry check
 
       - name: PyLint
-        run: poetry run pylint ./scripts --output-format=text:pylint.txt
+        run: |
+          set -e  # Exit immediately if a command exits with a non-zero status
+          poetry run pylint ./scripts --output-format=text:pylint.txt --fail-under=10.0
 
       - name: Upload Results PyLint
         uses: actions/upload-artifact@v3
@@ -42,3 +45,13 @@ jobs:
         with:
           name: mllint-results
           path: mllint.md
+
+      - name: black
+        run: |
+          set -e  # Exit immediately if a command exits with a non-zero status
+          poetry run black --check .
+
+      - name: isort
+        run: |
+          set -e  # Exit immediately if a command exits with a non-zero status
+          poetry run isort --check-only .
