@@ -5,7 +5,6 @@ description = "This is a project to train a model that performs sentiment analys
 authors = ["Philippe de Bekker, Hans Dekker, Luuk van Campen"]
 license = "MIT"
 readme = "README.md"
-packages = [{include = "model_training"}]
 
 [tool.poetry.dependencies]
 python = ">=3.8, <3.9"
