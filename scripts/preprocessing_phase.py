@@ -11,11 +11,11 @@ import pandas as pd
 from nltk.corpus import stopwords
 from nltk.stem.porter import PorterStemmer
 
-nltk.download('stopwords')
+nltk.download("stopwords")
 
 ps = PorterStemmer()
-all_stopwords = stopwords.words('english')
-all_stopwords.remove('not')
+all_stopwords = stopwords.words("english")
+all_stopwords.remove("not")
 
 # Define folder locations
 ROOT_FOLDER = os.path.dirname(os.path.dirname(__file__))
@@ -24,7 +24,8 @@ OUTPUT_FOLDER = os.path.join(ROOT_FOLDER, "output")
 
 # Define default datafile location
 FILEPATH_HISTORICAL_DATA = os.path.join(
-    DATA_FOLDER, "a1_RestaurantReviews_HistoricDump.tsv")
+    DATA_FOLDER, "a1_RestaurantReviews_HistoricDump.tsv"
+)
 
 
 def main():
@@ -37,7 +38,8 @@ def main():
     # Check if filepath argument exists
     if len(sys.argv) != 2:
         print(
-            "Invalid argument(s)! Please use: python [current_file_path.py] [data_file_path.tsv]")
+            "Invalid argument(s)! Please use: python [current_file_path.py] [data_file_path.tsv]"
+        )
         sys.exit(1)
 
     # Check filepath argument
@@ -46,14 +48,20 @@ def main():
     if filepath == "historical":
         filepath = FILEPATH_HISTORICAL_DATA
         if not os.path.exists(filepath):
-            print("Invalid argument: the default historical datafile (" +
-                  str(filepath) + ") does not exist.")
+            print(
+                "Invalid argument: the default historical datafile ("
+                + str(filepath)
+                + ") does not exist."
+            )
             sys.exit(1)
 
     # Check if filepath argument is a .tsv file
     if not filepath.endswith(".tsv"):
-        print("Invalid argument:",
-              filepath, "is required to be a filepath to a .tsv file.")
+        print(
+            "Invalid argument:",
+            filepath,
+            "is required to be a filepath to a .tsv file.",
+        )
         sys.exit(1)
 
     # Check if file exists
@@ -81,7 +89,8 @@ def preprocess(filepath: str):
     # Preprocess the data and write to output folder as .csv
     _get_dataframe(filepath).to_csv(
         os.path.join(OUTPUT_FOLDER, "preprocessed_" + os.path.basename(filepath)),
-        sep="\t", index=False
+        sep="\t",
+        index=False,
     )
 
 
@@ -96,11 +105,12 @@ def _get_dataframe(filepath: str) -> pd.DataFrame:
     applying a preprocessing function to the "Review" column of the dataset.
     """
     # Read from CSV
-    data: pd.DataFrame = pd.read_csv(filepath, delimiter='\t', quoting=3, dtype={
-        'Review': object, 'Liked': int})[:]
+    data: pd.DataFrame = pd.read_csv(
+        filepath, delimiter="\t", quoting=3, dtype={"Review": object, "Liked": int}
+    )[:]
 
     # Preprocess the "Review" column
-    data['Review'] = data['Review'].apply(__preprocess_review)
+    data["Review"] = data["Review"].apply(__preprocess_review)
 
     # Return the preprocessed DataFrame
     return data
@@ -116,12 +126,11 @@ def __preprocess_review(review: str) -> str:
     :type review: str
     :return: Preprocessed version of the input `review` string.
     """
-    review = re.sub('[^a-zA-Z]', ' ', review)
+    review = re.sub("[^a-zA-Z]", " ", review)
     review = review.lower()
     review = review.split()
-    review = [ps.stem(word)
-              for word in review if not word in set(all_stopwords)]
-    return ' '.join(review)
+    review = [ps.stem(word) for word in review if not word in set(all_stopwords)]
+    return " ".join(review)
 
 
 if __name__ == "__main__":

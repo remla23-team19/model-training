@@ -31,14 +31,14 @@ def load_data():
     # Create the historical data file if it does not exist
     if not os.path.exists(historical_file_path):
         print("Historical data not found. Downloading from Google Drive...")
-        with open(historical_file_path, 'wb') as file:
+        with open(historical_file_path, "wb") as file:
             data = requests.get(__get_drive_url(GDRIVE_ID_HISTORICAL_DATA), timeout=25)
             file.write(data.content)
 
     # Create the fresh data file if it does not exist
     if not os.path.exists(fresh_file_path):
         print("Fresh data not found. Downloading from Google Drive...")
-        with open(fresh_file_path, 'wb') as file:
+        with open(fresh_file_path, "wb") as file:
             data = requests.get(__get_drive_url(GDRIVE_ID_FRESH_DATA), timeout=25)
             file.write(data.content)
 

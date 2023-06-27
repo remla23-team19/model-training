@@ -19,9 +19,11 @@ __OUTPUT_FOLDER = os.path.join(__ROOT_FOLDER, "output")
 
 # Define default datafile locations
 __FILEPATH_HISTORICAL_DATA = os.path.join(
-    __DATA_FOLDER, "a1_RestaurantReviews_HistoricDump.tsv")
+    __DATA_FOLDER, "a1_RestaurantReviews_HistoricDump.tsv"
+)
 __FILEPATH_FRESH_DATA = os.path.join(
-    __DATA_FOLDER, "a2_RestaurantReviews_FreshDump.tsv")
+    __DATA_FOLDER, "a2_RestaurantReviews_FreshDump.tsv"
+)
 
 
 def main():
@@ -35,7 +37,8 @@ def main():
     # Check if filepath argument exists
     if len(sys.argv) != 2:
         print(
-            "Invalid argument(s)! Please use: python [current_file_path.py] [data_file_path.tsv]")
+            "Invalid argument(s)! Please use: python [current_file_path.py] [data_file_path.tsv]"
+        )
         sys.exit(1)
 
     filepath: str = sys.argv[1]
@@ -43,20 +46,29 @@ def main():
     if filepath == "historical":
         filepath = __FILEPATH_HISTORICAL_DATA
         if not os.path.exists(filepath):
-            print("Invalid argument: the default historical datafile (" +
-                  str(filepath) + ") does not exist.")
+            print(
+                "Invalid argument: the default historical datafile ("
+                + str(filepath)
+                + ") does not exist."
+            )
             sys.exit(1)
     elif filepath == "fresh":
         filepath = __FILEPATH_FRESH_DATA
         if not os.path.exists(filepath):
-            print("Invalid argument: the default fresh datafile (" +
-                  str(filepath) + ") does not exist.")
+            print(
+                "Invalid argument: the default fresh datafile ("
+                + str(filepath)
+                + ") does not exist."
+            )
             sys.exit(1)
 
     # Check if filepath argument is a(n existing) .tsv file
     if not filepath.endswith(".tsv"):
-        print("Invalid argument:",
-              filepath, "is required to be a filepath to a .tsv file.")
+        print(
+            "Invalid argument:",
+            filepath,
+            "is required to be a filepath to a .tsv file.",
+        )
         sys.exit(1)
 
     if not os.path.isfile(filepath):
@@ -64,18 +76,19 @@ def main():
         sys.exit(1)
 
     # Load and predict sentiment data
-    data = pd.read_csv(filepath,
-                       delimiter='\t',
-                       quoting=3,
-                       dtype={'Review': object, 'Liked': int})[:]
+    data = pd.read_csv(
+        filepath, delimiter="\t", quoting=3, dtype={"Review": object, "Liked": int}
+    )[:]
 
     predict_sentiment(data, verbose=True)
 
 
-def predict_sentiment(input_data: Union[str, pd.DataFrame],
-                      model: str = 'c2_Classifier_Sentiment_Model',
-                      bow: str = 'c1_BoW_Sentiment_Model.pkl',
-                      verbose: bool = True) -> List[int]:
+def predict_sentiment(
+    input_data: Union[str, pd.DataFrame],
+    model: str = "c2_Classifier_Sentiment_Model",
+    bow: str = "c1_BoW_Sentiment_Model.pkl",
+    verbose: bool = True,
+) -> List[int]:
     """
     This function takes in input data (either a string or a pandas DataFrame), a trained sentiment
     analysis model, and a bag of words model, and returns a list of predicted sentiment labels
@@ -114,7 +127,7 @@ def predict_sentiment(input_data: Union[str, pd.DataFrame],
 
     # Load model and bag of words
     classifier = joblib.load(model_path)
-    with open(bow_path, 'rb') as f:
+    with open(bow_path, "rb") as f:
         cv = pickle.load(f)
 
     # Load input data (either string or dataframe)
@@ -129,22 +142,21 @@ def predict_sentiment(input_data: Union[str, pd.DataFrame],
     X = cv.transform(data).toarray()
     y_pred = classifier.predict(X)
 
-    prediction_map = {
-        0: "negative",
-        1: "positive"
-    }
+    prediction_map = {0: "negative", 1: "positive"}
 
     if verbose:
-
-        print("""
+        print(
+            """
 ##############################
 # SENTIMENT ANALYSIS RESULTS #
 ##############################
-        """)
+        """
+        )
 
         for i, item in enumerate(data):
-            print(item, ":", str(y_pred[i]) +
-                  " (" + str(prediction_map[y_pred[i]]) + ")")
+            print(
+                item, ":", str(y_pred[i]) + " (" + str(prediction_map[y_pred[i]]) + ")"
+            )
 
     return y_pred
 
