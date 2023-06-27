@@ -3,9 +3,6 @@
 [![Latest Tag](https://img.shields.io/github/tag/remla23-team19/model-training.svg)](https://github.com/remla23-team19/model-training/tags) [![Latest Commit](https://img.shields.io/github/last-commit/remla23-team19/model-training.svg)](https://github.com/remla23-team19/model-training/commits/main) [![Python Version](https://img.shields.io/badge/python-3.8-yellow.svg)](https://www.python.org/downloads/release/python-380/) [![Code Quality CI](https://github.com/remla23-team19/model-training/actions/workflows/ci.yaml/badge.svg)](https://github.com/remla23-team19/model-training/actions/workflows/ci.yaml)
 
 This is a project to train a model that performs sentiment analysis on restaurant reviews.
-The training pipeline is in `b1_Sentiment_Analysis_Model.ipynb`.
-The inference pipeline is in `b2_Sentiment_Predictor.ipynb`.
-Training data is in `a1_RestaurantReviews_HistoricDump.tsv`.
 
 ## Structure
 
