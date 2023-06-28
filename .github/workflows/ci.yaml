@@ -29,7 +29,7 @@ jobs:
       - name: PyLint
         run: |
           set -e  # Exit immediately if a command exits with a non-zero status
-          poetry run pylint ./scripts --output-format=text:pylint.txt --fail-under=10.0
+          poetry run pylint ./scripts ./tests --output-format=text:pylint.txt --fail-under=10.0
 
       - name: Upload Results PyLint
         uses: actions/upload-artifact@v3
