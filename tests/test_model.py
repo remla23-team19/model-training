@@ -5,7 +5,7 @@ PyTest for data slicing.
 import pytest
 from sklearn.model_selection import train_test_split
 
-from scripts import data_phase, preprocessing_phase, production_phase
+from scripts import data_phase, preprocessing_phase, training_phase, production_phase
 
 
 @pytest.fixture(name="setup_training")
@@ -29,6 +29,12 @@ def test_model(setup_training):
     :param setup_training: The parameter "setup_training" is a dataset that is used for training
     and testing a model. It is a pandas DataFrame as a result of the training phase.
     """
+
+    # Train Models such that they are available for the production phase
+    training_phase.naive_bayes_model(
+        setup_training, seed=0, verbose=True
+    )
+
     _, tests = train_test_split(setup_training, test_size=0.2, random_state=42)
     prediction_result = production_phase.predict_sentiment(tests, verbose=True)
 
